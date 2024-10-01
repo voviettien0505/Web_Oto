@@ -18,7 +18,8 @@ public class Employee {
     private Long id;
 
     private String name;
-    private String position;
+    private Boolean position;
+    private String password;
     private String phone;
     private String email;
 
