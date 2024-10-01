@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Car Sale</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        .product-card {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .product-image {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .product-thumbnails img {
+            width: 60px;
+            height: 60px;
+            margin-right: 10px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            border-radius: 4px;
+        }
+
+        .product-thumbnails img.active {
+            border: 1px solid #649bee;
+            border-radius: 4px;
+        }
+
+        .btn-add-to-cart {
+            background-color: #f0ad4e;
+            color: white;
+        }
+
+        .btn-buy-now {
+            background-color: #d9534f;
+            color: white;
+        }
+
+        .policy-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .policy-list li {
+            margin-bottom: 10px;
+        }
+
+        .product-info {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .product-price {
+            color: #e53935;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .product-old-price {
+            text-decoration: line-through;
+            color: #888;
+            margin-left: 10px;
+        }
+
+        .product-discount {
+            background-color: #e53935;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .related-vouchers {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .voucher-item {
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #555;
+            text-align: center;
+        }
+
+        .voucher-item i {
+            margin-right: 5px;
+            color: #ffc107;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-selector button {
+            background-color: #e0e0e0;
+            border: none;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .quantity-selector input {
+            width: 50px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .btn-add-to-cart {
+            background-color: white;
+            color: #d9534f;
+            border: 2px solid #d9534f;
+            border-radius: 4px;
+            transition: none;
+        }
+
+        .btn-add-to-cart:hover,
+        .btn-add-to-cart:focus,
+        .btn-add-to-cart:active {
+            background-color: white;
+            color: #d9534f;
+            border: 2px solid #d9534f;
+            outline: none;
+        }
+
+        .btn-buy-now {
+            background-color: #c92127;
+            color: white;
+            border: 2px solid #c92127;
+            border-radius: 4px;
+            transition: none;
+        }
+
+        .btn-buy-now:hover,
+        .btn-buy-now:focus,
+        .btn-buy-now:active {
+            background-color: #c92127;
+            color: white;
+            border: 2px solid #c92127;
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <!-- Left Column: Product Image and Actions -->
+            <div class="col-md-4">
+                <div class="card product-card">
+                    <div class="text-center">
+                        <img src="https://www.toyota.com.vn//Resources/Images/5188C85C5E8C813398E30D3634915D95.png" class="product-image mb-3" id="mainImage" alt="Car Image">
+                    </div>
+                    <div class="product-thumbnails d-flex justify-content-center">
+                        <img src="https://www.toyota.com.vn//Resources/Images/5188C85C5E8C813398E30D3634915D95.png" alt="Thumbnail 1" onclick="changeImage(this)">
+                        <img src="https://www.toyota.com.vn//Resources/Images/5188C85C5E8C813398E30D3634915D95.png" alt="Thumbnail 2" onclick="changeImage(this)">
+                        <img src="https://www.toyota.com.vn//Resources/Images/5188C85C5E8C813398E30D3634915D95.png" alt="Thumbnail 3" onclick="changeImage(this)">
+                        <img src="https://www.toyota.com.vn//Resources/Images/5188C85C5E8C813398E30D3634915D95.png" alt="Thumbnail 4" onclick="changeImage(this)">
+                    </div>
+                    <div class="mt-3 d-flex justify-content-center">
+                        <a href="/cart" class="btn btn-add-to-cart me-2">
+                            <i class="bi bi-cart"></i> Add to Cart
+                        </a>
+                        <button class="btn btn-buy-now">Buy Now</button>
+                    </div>
+                    <ul class="policy-list mt-3">
+                        <li><i class="bi bi-truck"></i> Delivery time: Fast and reliable</li>
+                        <li><i class="bi bi-arrow-repeat"></i> Return policy: Free returns nationwide</li>
+                        <li><i class="bi bi-people"></i> Wholesale policy: Discounts for bulk purchases</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Right Column: Product Information -->
+            <div class="col-md-8">
+                <div class="product-info">
+                    <h4>2022 Toyota Camry - Premium Edition</h4>
+                    <p>Supplier: <a href="#">Toyota Vietnam</a></p>
+                    <p>Origin: Vietnam</p>
+                    <p>Brand: <a href="#">Toyota®</a></p>
+                    <div class="d-flex align-items-center">
+                        <span class="product-price">950.000.000 đ</span>
+                        <span class="product-old-price">1.200.000.000 đ</span>
+                        <span class="product-discount">-21%</span>
+                    </div>
+                    <hr>
+                    <h5>Shipping Information</h5>
+                    <p>Delivery to <strong>District 1, Ho Chi Minh City</strong> <a href="#" data-bs-toggle="modal" data-bs-target="#addressModal">Change</a></p>
+                    <p><i class="bi bi-truck"></i> Standard delivery - Estimated delivery by Saturday, 24/08</p>
+                    <hr>
+                    <h5>Related Offers</h5>
+                    <div class="related-vouchers">
+                        <div class="voucher-item"><i class="bi bi-cash"></i>Discount code 10k - orders from 100k</div>
+                        <div class="voucher-item"><i class="bi bi-truck"></i>100% free shipping code</div>
+                        <div class="voucher-item"><i class="bi bi-credit-card"></i>Vnpay: 5k off for every 50k</div>
+                        <div class="voucher-item"><i class="bi bi-gift"></i>Get a 5% e-voucher</div>
+                    </div>
+                    <hr>
+                    <div class="quantity-selector">
+                        <button>-</button>
+                        <input type="number" value="1" min="1">
+                        <button>+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="addressModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addressModalLabel">Select Your Delivery Address</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="addressOption" id="defaultAddress" checked>
+                        <label class="form-check-label" for="defaultAddress">
+                            Delivery to District 1, Ho Chi Minh City
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check
