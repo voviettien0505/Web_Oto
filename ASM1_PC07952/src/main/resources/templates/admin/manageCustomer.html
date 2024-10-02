@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Quản Lý Khách Hàng</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    #sidebar {
+      min-height: 100vh;
+    }
+
+    #sidebar .nav-link {
+      color: #fff;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    #sidebar .nav-link:hover {
+      background-color: #0056b3;
+      color: #fff;
+    }
+
+    #sidebar .nav-link.active {
+      background-color: #0d6efd;
+      color: #fff;
+    }
+
+    main {
+      padding-top: 20px;
+    }
+
+    .card-title {
+      font-weight: bold;
+    }
+
+    .table {
+      margin-top: 20px;
+    }
+
+    .table th,
+    .table td {
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .card-text {
+      font-size: 1.25rem;
+    }
+  </style>
+</head>
+
+<body>
+<div class="container-fluid">
+  <div class="row">
+    <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar">
+      <div class="position-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">
+              <i class="bi bi-speedometer2"></i>
+              Quản Lý
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="bi bi-car-front-fill"></i>
+              Quản lý xe
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/user">
+              <i class="bi bi-people-fill"></i>
+              Quản lý khách hàng
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/order">
+              <i class="bi bi-bag-fill"></i>
+              Quản lý đơn hàng
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="bi bi-gear-fill"></i>
+              Cài đặt
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <h1 class="h2">Quản Lý Khách Hàng</h1>
+
+      <!-- Customer Form -->
+      <div class="card mb-4">
+        <div class="card-header">
+          Thêm/Sửa Khách Hàng
+        </div>
+        <div class="card-body">
+          <form id="customerForm" action="/customer/save" method="post" onsubmit="return validateForm()">
+            <input type="hidden" name="id" th:value="${customer.id}"/>
+
+            <div class="mb-3">
+              <label for="name" class="form-label">Tên Khách Hàng</label>
+              <input type="text" class="form-control" id="name" name="name"
+                     th:value="${customer.name}" placeholder="Nhập tên khách hàng">
+              <div class="text-danger" id="nameError"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" name="email"
+                     th:value="${customer.email}" placeholder="Nhập email khách hàng">
+              <div class="text-danger" id="emailError"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="phone" class="form-label">Số Điện Thoại</label>
+              <input type="text" class="form-control" id="phone" name="phone"
+                     th:value="${customer.phone}" placeholder="Nhập số điện thoại khách hàng">
+              <div class="text-danger" id="phoneError"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="address" class="form-label">Địa Chỉ</label>
+              <input type="text" class="form-control" id="address" name="address"
+                     th:value="${customer.address}" placeholder="Nhập địa chỉ khách hàng">
+              <div class="text-danger" id="addressError"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label">Mật Khẩu</label>
+              <input type="password" class="form-control" id="password" name="password"
+                     placeholder="Nhập mật khẩu">
+              <div class="text-danger" id="passwordError"></div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Lưu</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Customer Table -->
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+          <thead class="table-dark">
+          <tr>
+            <th>#</th>
+            <th>Tên Khách Hàng</th>
+            <th>Email</th>
+            <th>Số Điện Thoại</th>
+            <th>Địa Chỉ</th>
+            <th>Thao Tác</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="customer : ${customers}">
+            <td th:text="${customer.id}">1</td>
+            <td th:text="${customer.name}">Nguyễn Văn A</td>
+            <td th:text="${customer.email}">a@example.com</td>
+            <td th:text="${customer.phone}">0912345678</td>
+            <td th:text="${customer.address}">Hà Nội</td>
+            <td>
+              <a th:href="@{/customer/edit/{id}(id=${customer.id})}" class="btn btn-sm btn-warning">Chỉnh
+                sửa</a>
+              <a th:href="@{/customer/delete/{id}(id=${customer.id})}"
+                 class="btn btn-sm btn-danger">Xóa</a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  function validateForm() {
+    // Clear previous error messages
+    document.getElementById("nameError").innerText = "";
+    document.getElementById("emailError").innerText = "";
+    document.getElementById("phoneError").innerText = "";
+    document.getElementById("addressError").innerText = "";
+    document.getElementById("passwordError").innerText = "";
+
+    // Get form values
+    var name = document.getElementById("name").value.trim();
+    var email = document.getElementById("email").value.trim();
+    var phone = document.getElementById("phone").value.trim();
+    var address = document.getElementById("address").value.trim();
+    var password = document.getElementById("password").value;
+
+    let isValid = true;
+
+    // Validate name: must not be empty and cannot contain numbers
+    if (!name) {
+      document.getElementById("nameError").innerText = "Tên khách hàng không được để trống.";
+      isValid = false;
+    } else if (/\d/.test(name)) {
+      document.getElementById("nameError").innerText = "Tên khách hàng không được chứa số.";
+      isValid = false;
+    }
+
+    // Validate email: must not be empty and should be valid
+    if (!email) {
+      document.getElementById("emailError").innerText = "Email không được để trống.";
+      isValid = false;
+    } else {
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(email)) {
+        document.getElementById("emailError").innerText = "Email không hợp lệ.";
+        isValid = false;
+      }
+    }
+
+    // Validate phone: must not be empty and should contain only digits
+    if (!phone) {
+      document.getElementById("phoneError").innerText = "Số điện thoại không được để trống.";
+      isValid = false;
+    } else if (!/^\d+$/.test(phone)) {
+      document.getElementById("phoneError").innerText = "Số điện thoại chỉ được chứa số.";
+      isValid = false;
+    }
+
+    // Validate address: must not be empty
+    if (!address) {
+      document.getElementById("addressError").innerText = "Địa chỉ không được để trống.";
+      isValid = false;
+    }
+
+    // Validate password: must not be empty and should be at least 6 characters
+    if (!password) {
+      document.getElementById("passwordError").innerText = "Mật khẩu không được để trống.";
+      isValid = false;
+    } else if (password.length < 6) {
+      document.getElementById("passwordError").innerText = "Mật khẩu phải ít nhất 6 ký tự.";
+      isValid = false;
+    }
+
+    // Return false to prevent form submission if any validation fails
+    return isValid;
+  }
+</script>
+</body>
+</html>
